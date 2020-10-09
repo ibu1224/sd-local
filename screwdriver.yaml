@@ -4,19 +4,8 @@ shared:
         GOPATH: /sd/workspace
 
 jobs:
-    test:
-        requires: [~pr, ~commit]
-        steps:
-            - gover: go version
-            - install: go mod download
-            - gofmt: (! gofmt -d -s . | grep '^')
-            - install-golint: go get golang.org/x/lint/golint
-            - test: make test COVERPROFILE=${SD_ARTIFACTS_DIR}/coverage.out
-            - build: go build -a -o /dev/null
-            - test-release: "curl -sL https://git.io/goreleaser | bash -s -- --snapshot"
-
     publish:
-        requires: [test]
+        requires: [~commit]
         steps:
             #- setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
             - get: go mod download
@@ -24,7 +13,7 @@ jobs:
             - version: VERSION=1.0.8
             - tag: git tag v1.0.8 && git push origin v1.0.8
             #- release: "curl -sL https://git.io/goreleaser | bash"
-        secrets:
+        #secrets:
             # Pushing tags to Git
             #- GIT_KEY
             # Pushing releases to GitHub
