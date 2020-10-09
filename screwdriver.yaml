@@ -18,12 +18,14 @@ jobs:
     publish:
         requires: [test]
         steps:
-            - setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
+            #- setup-ci: git clone https://github.com/screwdriver-cd/toolbox.git ci
             - get: go mod download
-            - tag: ./ci/git-tag.sh
-            - release: "curl -sL https://git.io/goreleaser | bash"
+            #- tag: ./ci/git-tag.sh
+            - version: VERSION=1.0.8
+            - tag: git tag v1.0.8 && git push origin v1.0.8
+            #- release: "curl -sL https://git.io/goreleaser | bash"
         secrets:
             # Pushing tags to Git
-            - GIT_KEY
+            #- GIT_KEY
             # Pushing releases to GitHub
-            - GITHUB_TOKEN
+            #- GITHUB_TOKEN
