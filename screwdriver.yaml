@@ -11,7 +11,8 @@ jobs:
             - get: go mod download
             #- tag: ./ci/git-tag.sh
             - version: VERSION=1.0.8
-            - tag: git tag v1.0.8 && git push origin v1.0.8
+            - remote: git remote -v
+            #- tag: git tag v1.0.8 && git push origin v1.0.8
             #- release: "curl -sL https://git.io/goreleaser | bash"
         #secrets:
             # Pushing tags to Git
